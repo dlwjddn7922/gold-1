@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     Animator anim;
     Vector3 dirVec;
     GameObject scanObj;
+    [SerializeField] GameManeger maneger;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +23,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = maneger.isAction ? 0 :Input.GetAxisRaw("Horizontal");
+        v = maneger.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
+        bool hDown = maneger.isAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = maneger.isAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = maneger.isAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = maneger.isAction ? false : Input.GetButtonUp("Vertical");
 
         if (hDown)
             isHorizontal = true;
@@ -65,7 +66,8 @@ public class Player : MonoBehaviour
         //Scan Object
         if(Input.GetButtonDown("Jump") && scanObj != null)
         {
-            Debug.Log("This is :" + scanObj.name);
+            maneger.Action(scanObj);
+
         }
 
 
